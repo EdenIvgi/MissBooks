@@ -2,7 +2,10 @@
 import { BookFilter } from '../cmps/BookFilter.jsx'
 import { BookList } from '../cmps/BookList.jsx'
 import { bookService } from '../services/book.service.js'
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { BookDetails } from './BookDetails.jsx'
+
+const { Link } = ReactRouterDOM
 
 const { useState, useEffect, Fragment } = React
 
@@ -51,13 +54,18 @@ export function BookIndex() {
           onBack={() => setSelectedBookId(null)}
         />
       }
-
+     
       {!selectedBookId &&
         <Fragment>
           <BookFilter
             filterBy={filterBy}
             onSetFilter={onSetFilter}
           />
+<section>
+
+            <Link to ="/book/edit">Add</Link>
+</section>
+
           <BookList
             books={books}
             onRemoveBook={onRemoveBook}

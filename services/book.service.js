@@ -76,7 +76,7 @@ function _createBooks() {
                 description: makeLorem(20),
                 pageCount: getRandomIntInclusive(20, 600),
                 categories: [ctgs[getRandomIntInclusive(0, ctgs.length - 1)]],
-                thumbnail: `assets/books-photos/${i + 1}.jpg`,
+                thumbnail: `https://www.coding-academy.org/books-photos/${i + 1}.jpg`,
                 language: "en",
                 listPrice: {
                     amount: getRandomIntInclusive(80, 500),
@@ -89,7 +89,6 @@ function _createBooks() {
         saveToStorage(BOOK_KEY, books)
     }
 }
-
 
 // function _createBook(title, price) {
 //     return {

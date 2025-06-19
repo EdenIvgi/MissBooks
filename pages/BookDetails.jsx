@@ -1,8 +1,10 @@
 import { bookService } from '../services/book.service.js'
-
+const { useParams, useNavigate } = ReactRouterDOM
 const { useState, useEffect } = React
 
-export function BookDetails({ bookId, onBack }) {
+export function BookDetails() {
+  const { bookId } = useParams()
+  const navigate = useNavigate()
   const [book, setBook] = useState(null)
 
   useEffect(() => {
@@ -27,16 +29,12 @@ export function BookDetails({ bookId, onBack }) {
 
   return (
     <section className="book-details container">
-      <button onClick={onBack}> Back</button>
+      <button onClick={() => navigate(-1)}>Back</button>
       <h1>{title}</h1>
       <img src={thumbnail} alt={title} />
       <p>{description}</p>
-      <p>
-        Pages: {pageCount} – <span>{readingLevel}</span>
-      </p>
-      <p>
-        Published: {publishedDate} – <span>{publicationStatus}</span>
-      </p>
+      <p>Pages: {pageCount} – <span>{readingLevel}</span></p>
+      <p>Published: {publishedDate} – <span>{publicationStatus}</span></p>
       <p className={priceClass}>
         Price: {listPrice.amount} {listPrice.currencyCode}
         {listPrice.isOnSale && <span className="on-sale"> – On Sale!</span>}

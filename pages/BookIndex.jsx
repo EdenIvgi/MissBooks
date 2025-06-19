@@ -6,7 +6,6 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { BookDetails } from './BookDetails.jsx'
 
 const { Link } = ReactRouterDOM
-
 const { useState, useEffect, Fragment } = React
 
 export function BookIndex() {

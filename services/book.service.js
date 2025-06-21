@@ -1,4 +1,4 @@
-import { loadFromStorage, makeId, saveToStorage, makeLorem, getRandomIntInclusive } from './util.service.js'
+import { makeId, makeLorem, getRandomIntInclusive, saveToStorage, loadFromStorage } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
@@ -10,7 +10,9 @@ export const bookService = {
     remove,
     save,
     getEmptyBook,
-    getDefaultFilter
+    getDefaultFilter,
+    addReview,
+    removeReview
 }
 
 function query(filterBy = {}) {
@@ -54,11 +56,28 @@ function getEmptyBook(title = '', price = 0) {
             currencyCode: 'USD',
             isOnSale: false,
         },
+        reviews: []
     }
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSpeed: '' }
+    return { title: '', minPrice: '' }
+}
+
+function addReview(bookId, review) {
+    return get(bookId).then(book => {
+        if (!book.reviews) book.reviews = []
+        review.id = makeId()
+        book.reviews.push(review)
+        return save(book)
+    })
+}
+
+function removeReview(bookId, reviewId) {
+    return get(bookId).then(book => {
+        book.reviews = book.reviews.filter(review => review.id !== reviewId)
+        return save(book)
+    })
 }
 
 function _createBooks() {
@@ -82,13 +101,16 @@ function _createBooks() {
                     amount: getRandomIntInclusive(80, 500),
                     currencyCode: "EUR",
                     isOnSale: Math.random() > 0.7
-                }
+                },
+                reviews: []
             }
             books.push(book)
         }
         saveToStorage(BOOK_KEY, books)
     }
 }
+
+
 
 // function _createBook(title, price) {
 //     return {

@@ -18,7 +18,11 @@ export function BookEdit() {
 
     function loadBook() {
         bookService.get(bookId)
-            .then(book => setBookToEdit(book))
+            .then(book =>
+                console.log('book', book) ||
+                // If the book is not found, redirect to book index  
+                setBookToEdit(book))
+                
             .catch(err => console.log('Cannot get book:', err))
     }
 
@@ -38,32 +42,39 @@ export function BookEdit() {
         let value = target.value
         switch (target.type) {
             case 'number':
-            case 'range':
-                value = +value
-                break;
+                case 'range':
+                    value = +value
+                    break;
 
-            case 'checkbox':
-                value = target.checked
-                break
-        }
-        setBookToEdit(prevBook => ({ ...prevBook, [field]: value }))
-    }
-
-    const { title, priceList } = bookToEdit
-    return (
-        <section className="book-edit">
+                    case 'checkbox':
+                        value = target.checked
+                        break
+                    }
+                    if (field === 'listPrice') {
+                        setBookToEdit(prevBook => ({
+                            ...prevBook,
+                            listPrice: { ...prevBook.listPrice, amount: value }
+                        }))
+                    } else {
+                        setBookToEdit(prevBook => ({ ...prevBook, [field]: value }))
+                    }    }
+          
+    
+                const { title,listPrice } = bookToEdit
+                return (
+                    <section className="book-edit">
             <h1>{bookId ? 'Edit' : 'Add'} Book</h1>
             <form onSubmit={onSaveBook}>
                 <label htmlFor="title">title</label>
                 <input onChange={handleChange} value={title} type="text" name="title" id="title" />
 
-                <label htmlFor="priceList">priceList</label>
-                <input onChange={handleChange} value={priceList || ''} type="number" name="priceList" id="priceList" />
+                <label htmlFor="listPrice">listPrice</label>
+                <input onChange={handleChange} value={listPrice.amount||'' } type="number" name="listPrice" id="listPrice" />
 
                 <button>Save</button>
             </form>
 
         </section>
     )
-
+    
 }

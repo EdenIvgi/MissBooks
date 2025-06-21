@@ -69,6 +69,7 @@ export function BookIndex() {
             books={books}
             onRemoveBook={onRemoveBook}
             onSelectBookId={onSelectBookId}
+            
           />
         </Fragment>
       }

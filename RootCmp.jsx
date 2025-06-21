@@ -11,12 +11,14 @@ import { BookDetails } from "./pages/BookDetails.jsx"
 const Router = ReactRouterDOM.HashRouter
 const { Routes, Route, Navigate } = ReactRouterDOM
 
-export function RootCmp() {
+
+
+export function RootCmp()  {
     
   return (
       <Router>
           <section className="app">
-              <AppHeader />
+            <AppHeader />
               <main>
                   <Routes>
                       <Route path="/" element={<Navigate to="/home" />} />

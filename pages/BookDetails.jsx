@@ -3,6 +3,7 @@ const { useParams, useNavigate } = ReactRouterDOM
 const { useState, useEffect } = React
 
 export function BookDetails() {
+  console.log(useParams())
   const { bookId } = useParams()
   const navigate = useNavigate()
   const [book, setBook] = useState(null)
@@ -13,14 +14,15 @@ export function BookDetails() {
 
   function loadBook() {
     bookService.get(bookId)
-      .then(setBook)
+      .then(
+        setBook)
       .catch(err => {
         console.log('Failed to load book:', err)
       })
   }
 
   if (!book) return <div>Loading...</div>
-
+  console.log('book', book)
   const { title, description, thumbnail, listPrice, pageCount, publishedDate } = book
 
   const readingLevel = getReadingLevel(pageCount)

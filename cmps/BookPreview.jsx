@@ -1,6 +1,6 @@
 export function BookPreview({ book }) {
   // TODO: handle error
-  console.log(book);
+  // console.log(book);
 
   const { title, thumbnail } = book
   return (

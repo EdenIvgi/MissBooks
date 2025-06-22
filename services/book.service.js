@@ -12,7 +12,8 @@ export const bookService = {
     getEmptyBook,
     getDefaultFilter,
     addReview,
-    removeReview
+    removeReview,
+    addGoogleBook
 }
 
 function query(filterBy = {}) {
@@ -122,20 +123,37 @@ function _setNextPrevBookId(book) {
     })
 }
 
+function addGoogleBook(googleBook) {
+    return storageService.query(BOOK_KEY)
+        .then(books => {
+            if (books.find(book => book.id === googleBook.id)) {
+                return Promise.reject('Book already exists')
+            }
 
+            const newBook = {
+                id: googleBook.id,
+                title: googleBook.title,
+                subtitle: googleBook.subtitle || '',
+                authors: googleBook.authors || ['Unknown'],
+                publishedDate: googleBook.publishedDate || '',
+                description: googleBook.description || '',
+                pageCount: googleBook.pageCount || 100,
+                categories: googleBook.categories || ['Other'],
+                thumbnail: googleBook.thumbnail || '',
+                language: googleBook.language || 'en',
+                listPrice: {
+                    amount: getRandomIntInclusive(80, 200),
+                    currencyCode: 'USD',
+                    isOnSale: Math.random() > 0.5
+                },
+                reviews: []
+            }
 
-// function _createBook(title, price) {
-//     return {
-//         id: makeId(),
-//         title,
-//         description: makeLorem(20),
-//         thumbnail: `http://coding-academy.org/books-photos/${getRandomIntInclusive(1, 20)}.jpg`,
-//         listPrice: {
-//             amount: price,
-//             currencyCode: 'EUR',
-//             isOnSale: Math.random() > 0.5,
-//         },
-//     }
-// }
+            books.push(newBook)
+            saveToStorage(BOOK_KEY, books)
+            return Promise.resolve(newBook)
+        })
+}
+
 
 

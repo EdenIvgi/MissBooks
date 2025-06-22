@@ -62,7 +62,12 @@ export function BookIndex() {
           />
 <section>
 
-            <Link to ="/book/edit">Add</Link>
+            <Link to ="/book/edit">
+            <button>Add Book</button>
+            </Link>
+            <Link to="/book/add">
+  <button>Add Google Book</button>
+</Link>
 </section>
 
           <BookList
